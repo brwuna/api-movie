@@ -1,10 +1,12 @@
 require("express-async-errors");
+require("dotenv/config");
 const migrationsRun = require("./database/sqlite/migrations");
 const AppError = require("./utils/AppError");
 const uploadConfig = require("./configs/upload");
 
 const cors = require("cors");
 const express = require("express");
+
 const routes = require("./routes");
 
 migrationsRun();
@@ -30,31 +32,6 @@ app.use(( error, request, response, next ) => {
     })
 })
 
-const PORT = 3333;
+const PORT = process.env.PORT || 3333;
 
 app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`))
-
-
-
-
-
-
-
-/* 
-    app.get("/message/:id/:user", (req, res) => {
-        const { id, user } = req.params
-        res.send(`ID da mensagem: ${id}. Para o usuário ${user}`);
-    })
-
-    // Ex: http://localhost:3333/message/5/bruna
-    // ID da mensagem: 5. Para o usuário bruna
-
-    app.get("/users", (req, res) => {
-        const { page, limit } = req.query
-
-        res.send(`Page: ${page}. Limit: ${limit}`);
-    })
-
-    // Ex: http://localhost:3333/users?page=2&limit=10
-    // Page: 10. Limit: 10.
-*/
